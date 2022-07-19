@@ -1,0 +1,15 @@
+genrule(
+    name = "output",
+    srcs = ["@ffmpeg//:all"],
+    outs = ["output.txt"],
+    cmd = """
+      mkdir -p output
+      cp -L -r external/ffmpeg/ build/
+      cd build/
+      ./configure --prefix="../output"
+      make
+      make install
+      cd ..
+      tree output > "$@"
+    """
+)
